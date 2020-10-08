@@ -1,0 +1,8 @@
+.serverless
+.webpack
+.DS_Store
+package-lock.json
+node_modules/
+dist/
+coverage
+.nyc_output

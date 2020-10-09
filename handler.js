@@ -1,31 +1,34 @@
 'use strict';
 const db = require('./app/config/db');
+const send = require('./app/utils/response');
 
-const CustomerController = require('./app/controllers/customer.controller');
+const CustomerController = require('./app/controllers/customer/customer.controller');
 
 module.exports.getCustomer = async (event) => {
-  console.log('i am here', event.pathParameters.id);
-  const customer = await CustomerController.getCustomer(
-    event.pathParameters.id
-  );
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(customer),
-  };
+  try {
+    const customer = await CustomerController.getCustomer(
+      event.pathParameters.id
+    );
+    return send(customer);
+  } catch (err) {
+    return send(err, 404);
+  }
 };
 
 module.exports.createCustomerIfNotExist = async (event) => {
   console.log('creating customer');
   const { body } = event;
-  let customer = await CustomerController.createCustomerIfNotExist(
-    JSON.parse(body)
-  );
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(customer),
-  };
+  try {
+    const customer = await CustomerController.createCustomerIfNotExist(
+      JSON.parse(body)
+    );
+
+    return send(customer);
+  } catch (e) {
+    // console.log(e);
+    return send(e, 500);
+  }
 };
 
 // module.exports.snsLamdbaTriggered = (event, context, callback) => {

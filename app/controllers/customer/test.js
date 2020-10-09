@@ -4,7 +4,6 @@ chai.use(require('chai-as-promised'));
 const faker = require('faker');
 const CustomerController = require('./customer.controller');
 const testHelper = require('../../utils/test.helper');
-const mongoose = require('mongoose');
 
 beforeEach(testHelper.setupTest);
 
